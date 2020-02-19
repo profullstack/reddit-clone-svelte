@@ -105,8 +105,8 @@
     <div class="post-preview">{ post.url || post.text }</div>
 
     <div class="post-detail" class:separator={ !withDetails }>
-      <Link to="/a/{ post.category }/{ post.id }">{ post.comments.length } comments</Link> ·
-      <Link to="/a/{ post.category }">/a/{ post.category }</Link> ·
+      <Link to="/a/{ post.category.name }/{ post.id }">{ post.comments.length } comments</Link> ·
+      <Link to="/a/{ post.category.name }">/a/{ post.category.name }</Link> ·
       <span>by</span>
       <Link to="/u/{ post.author.username }">{ post.author.username }</Link> ·
       <span>{ moment(post.created).fromNow() }</span>
