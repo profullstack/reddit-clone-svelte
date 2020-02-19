@@ -8,6 +8,7 @@
 	import Signup from './Signup.svelte'
 	import Detail from './Detail.svelte'
 	import PostForm from './PostForm.svelte'
+	import CategoryForm from './CategoryForm.svelte'
 </script>
 
 <style>
@@ -27,6 +28,7 @@
 			<Route path="/a/:category" component={ Home } />
 			<Route path="/a/:category/:postId" component={ Detail } />
 			<Route path="/compose" component={ PostForm } />
+			<Route path="/newcategory" component={ CategoryForm } />
 		</div>
 	</div>
 </Router>
