@@ -4,13 +4,21 @@
   import { userStore } from './store'
 
   let scoops = 'link'
+  let categories = []
   let user
   userStore.subscribe(value => {
     user = value
   })
 
-  onMount(() => {
+  onMount(async () => {
     if (!user) navigate('/')
+
+    const url = 'API_BASE_URL/api/category'
+    const res = await fetch(url, {
+      method: 'GET'
+    })
+
+    categories = await res.json()
   })
 
   const createPost = async (event) => {
@@ -111,9 +119,9 @@
     </div>
     <label for="category">Category</label>
     <select id="category" name="category">
-      <option value="tech">tech</option>
-      <option value="programming">programming</option>
-      <option value="dota2">underlords</option>
+      {#each categories as category}
+        <option value="{ category._id }">{ category.name }</option>
+      {/each}
     </select>
     <label for="title">Title</label>
     <input type="text" placeholder="Put your title here ..." id="title" name="title">
