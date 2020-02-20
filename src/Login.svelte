@@ -45,8 +45,19 @@
   }
 </script>
 
-<div class="row">
-  <div class="column column-33">
+<style>
+  .login {
+    width: 300px;
+  }
+  @media only screen and (max-width: 800px) {
+    .login {
+      width: 100%;
+    }
+  }
+</style>
+
+<div class="login">
+  <div>
     <form id="login">
       <fieldset>
         <input type="text" placeholder="Username" id="username" name="username">

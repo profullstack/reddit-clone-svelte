@@ -9,26 +9,50 @@
 	import Detail from './Detail.svelte'
 	import PostForm from './PostForm.svelte'
 	import CategoryForm from './CategoryForm.svelte'
+	import Sidebar from './Sidebar.svelte'
 </script>
 
 <style>
-	.container {
-		max-width: 800px;
+	:global(.row) {
+	  justify-content: center;
 	}
+	.container {
+		max-width: 70%;
+	}
+	.main {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+	}
+	.content {
+		margin-top: 20px;
+	}
+	@media only screen and (max-width: 1200px) {
+    .container {
+      max-width: 100%;
+      padding: 0px;
+    }
+    :global(.row) {
+    	max-width: 90%;
+    }
+  }
 </style>
 
 <Router>
 	<div class="container">
-		<Navbar></Navbar>
-		<div>
-			<Route path="/" component={ Home } />
-			<Route path="/login" component={ Login } />
-			<Route path="/register" component={ Signup } />
-			<Route path="/u/:username" component={ Home } />
-			<Route path="/a/:category" component={ Home } />
-			<Route path="/a/:category/:postId" component={ Detail } />
-			<Route path="/compose" component={ PostForm } />
-			<Route path="/newcategory" component={ CategoryForm } />
+		<Navbar showOverlay></Navbar>
+		<div class="main">
+			<Sidebar></Sidebar>
+			<div class="content">
+				<Route path="/" component={ Home } />
+				<Route path="/login" component={ Login } />
+				<Route path="/register" component={ Signup } />
+				<Route path="/u/:username" component={ Home } />
+				<Route path="/a/:category" component={ Home } />
+				<Route path="/a/:category/:postId" component={ Detail } />
+				<Route path="/compose" component={ PostForm } />
+				<Route path="/newcategory" component={ CategoryForm } />
+			</div>
 		</div>
 	</div>
 </Router>

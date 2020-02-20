@@ -45,8 +45,19 @@
   }
 </script>
 
-<div class="row">
-  <div class="column column-33">
+<style>
+  .signup {
+    width: 300px;
+  }
+  @media only screen and (max-width: 800px) {
+    .signup {
+      width: 100%;
+    }
+  }
+</style>
+
+<div class="signup">
+  <div>
     <form id="register">
       <fieldset>
         <input type="text" placeholder="Username" id="username" name="username">
