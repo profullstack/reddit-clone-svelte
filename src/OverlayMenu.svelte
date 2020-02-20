@@ -53,7 +53,7 @@
     margin-top: 20px;
   }
   .menu {
-    margin-top: 10px;
+    margin-top: 50px;
   }
   button {
     background: #bd7ee4;
