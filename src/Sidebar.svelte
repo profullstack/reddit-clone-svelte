@@ -25,9 +25,6 @@
     width: 200px;
     text-align: center;
     padding: 10px;
-    position: absolute;
-    top: auto;
-    left: 0;
   }
   .sidebar ul{
     list-style: none;

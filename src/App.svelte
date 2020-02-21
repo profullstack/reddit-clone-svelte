@@ -22,10 +22,11 @@
 	.main {
 		width: 100%;
 		display: flex;
-		justify-content: center;
+		justify-content: flex-start;
 	}
 	.content {
 		margin-top: 20px;
+		word-wrap: anywhere;
 	}
 	@media only screen and (max-width: 1250px) {
     .container {
