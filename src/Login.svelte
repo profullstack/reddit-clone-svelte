@@ -56,15 +56,10 @@
   }
 </style>
 
-<div class="login">
-  <div>
-    <form id="login">
-      <fieldset>
-        <input type="text" placeholder="Username" id="username" name="username">
-        <input type="password" placeholder="Password" id="password" name="password">
-
-        <button class="button-primary float-right" type="submit" on:click={ login }>Login</button>
-      </fieldset>
-    </form>
-  </div>
-</div>
+<form class="login" id="login">
+  <fieldset>
+    <input type="text" placeholder="Username" id="username" name="username">
+    <input type="password" placeholder="Password" id="password" name="password">
+    <button class="button-primary float-right" type="submit" on:click={ login }>Login</button>
+  </fieldset>
+</form>

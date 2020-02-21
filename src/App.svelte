@@ -27,7 +27,7 @@
 	.content {
 		margin-top: 20px;
 	}
-	@media only screen and (max-width: 1200px) {
+	@media only screen and (max-width: 1250px) {
     .container {
       max-width: 100%;
       padding: 0px;
@@ -40,7 +40,7 @@
 
 <Router>
 	<div class="container">
-		<Navbar showOverlay></Navbar>
+		<Navbar></Navbar>
 		<div class="main">
 			<Sidebar></Sidebar>
 			<div class="content">

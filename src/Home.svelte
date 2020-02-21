@@ -32,10 +32,6 @@
   })
 </script>
 
-<div class="">
-  <div class="">
-    {#each posts as post}
-      <Post { post }></Post>
-    {/each}
-  </div>
-</div>
+{#each posts as post}
+  <Post { post }></Post>
+{/each}

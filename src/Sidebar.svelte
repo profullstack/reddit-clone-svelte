@@ -33,7 +33,7 @@
     list-style: none;
     margin-bottom: 0px;
   }
-  @media only screen and (max-width: 800px) {
+  @media only screen and (max-width: 850px) {
     .sidebar {
       display: none;
     }

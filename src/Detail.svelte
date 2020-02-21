@@ -39,19 +39,13 @@
 </style>
 
 {#if post}
-  <div>
-    <div>
-      <div>
-        <div class="post-body">
-          <Post { post } withDetails={ true }></Post>
-        </div>
-        <div class="post-meta">
-          {#if user}
-            <CommentForm id={ post.id } on:update-comment={ updateComment }></CommentForm>
-          {/if}
-          <Comment id={ post.id } comments={ post.comments } on:update-comment={ updateComment }></Comment>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="post-body">
+  <Post { post } withDetails={ true }></Post>
+</div>
+<div class="post-meta">
+  {#if user}
+    <CommentForm id={ post.id } on:update-comment={ updateComment }></CommentForm>
+  {/if}
+  <Comment id={ post.id } comments={ post.comments } on:update-comment={ updateComment }></Comment>
+</div>
 {/if}
