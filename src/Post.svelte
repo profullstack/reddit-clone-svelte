@@ -8,7 +8,7 @@
 
   let postThumb = null;
 
-  if (/\.(jpg|jpeg|png|gif)$/.test(post.url.toLowerCase())) {
+  if (post.url && /\.(jpg|jpeg|png|gif)$/.test(post.url.toLowerCase())) {
     postThumb = post.url;
     console.log(postThumb, 'postThumb');
   }
