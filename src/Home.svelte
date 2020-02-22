@@ -1,6 +1,6 @@
 <script>
   import Post from './Post.svelte'
-  import { userStore } from './store'
+  import { userStore, currentCategory } from './store'
 
   export let username = null
   export let category = null
@@ -8,6 +8,7 @@
 
   if (category) {
     document.title = `${category} - upvotocracy.com`
+    currentCategory.set(category)
   }
 
   const fetchPost = async ({ username, category }) => {

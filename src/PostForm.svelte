@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte'
   import { navigate } from 'svelte-routing'
-  import { userStore } from './store'
+  import { userStore, currentCategory } from './store'
 
   let scoops = 'link'
   let categories = []
@@ -10,13 +10,20 @@
     user = value
   })
 
-  async function onUrlBlur(e) {
-    const form = document.getElementById('create-post');
-    const formData = new FormData(form);
-    const url = formData.get('url');
-    const res = await getTitle(url);
+  let currentCat
+  currentCategory.subscribe(value => {
+    currentCat = value
+  })
 
-    document.getElementById('title').value = res.title.slice(0, 100).trim();
+  async function onUrlBlur(e) {
+    if (!title) {
+      const form = document.getElementById('create-post');
+      const formData = new FormData(form);
+      const url = formData.get('url');
+      const res = await getTitle(url);
+
+      document.getElementById('title').value = res.title.slice(0, 100).trim();
+    }
   }
 
   onMount(async () => {
@@ -62,6 +69,18 @@
 
     if (!res.ok) alert('Something went wrong!')
     return navigate('/')
+  }
+
+  const urlParams = new URLSearchParams(window.location.search)
+  const title = urlParams.get('title')
+  const link = urlParams.get('link')
+  const text = urlParams.get('text')
+
+  if (urlParams.get('category')) {
+    currentCat = urlParams.get('category')
+  }
+  if (urlParams.get('text')) {
+    scoops = 'text'
   }
 </script>
 
@@ -135,17 +154,21 @@
     <label for="category">Category</label>
     <select id="category" name="category">
       {#each categories as category}
-        <option value="{ category._id }">{ category.name }</option>
+        {#if category.name == currentCat}
+          <option value="{ category._id }" selected>{ category.name }</option>
+        {:else}
+          <option value="{ category._id }">{ category.name }</option>
+        {/if}
       {/each}
     </select>
     <label for="title">Title</label>
-    <input type="text" placeholder="Put your title here ..." id="title" name="title">
+    <input type="text" placeholder="Put your title here ..." id="title" name="title" value="{title}">
     {#if scoops === 'link'}
       <label for="url">Link</label>
-      <input type="text" placeholder="https:// ..." id="url" name="url" on:blur={onUrlBlur}>
+      <input type="text" placeholder="https:// ..." id="url" name="url" on:blur={onUrlBlur} value="{link}">
     {:else}
       <label for="text">Text</label>
-      <textarea placeholder="Put your text here ..." id="text" name="text"></textarea>
+      <textarea placeholder="Put your text here ..." id="text" name="text" value="{text}"></textarea>
     {/if}
     <button class="button-primary float-right" type="submit" on:click={ createPost }>Create Post</button>
   </fieldset>
