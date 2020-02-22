@@ -6,9 +6,14 @@
   export let category = null
   let posts = []
 
-  if (category) {
-    document.title = `${category} - upvotocracy.com`
-    currentCategory.set(category)
+  $: {    
+    if (category) {
+      document.title = `${category} - upvotocracy.com`
+      currentCategory.set(category)
+    }
+    else {
+      document.title = 'upvotocracy.com'
+    } 
   }
 
   const fetchPost = async ({ username, category }) => {
