@@ -8,10 +8,17 @@
   export let withDetails = false
   let postThumb = null;
 
-  if (post.url && /\.(jpg|jpeg|png|gif)/.test(post.url.toLowerCase())) {
-    postThumb = post.url;
-    console.log(postThumb, 'postThumb');
+  const getThumb = (post) => {
+    if (post.url && /\.(jpg|jpeg|png|gif)/.test(post.url.toLowerCase())) {
+      postThumb = post.url;
+      console.log(postThumb, 'postThumb');
+    }
+    else {
+      postThumb = null;
+    }
   }
+
+  $: getThumb(post);
 
   let user = {}
   userStore.subscribe(value => {
