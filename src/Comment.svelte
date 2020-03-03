@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher } from 'svelte'
+  import { createEventDispatcher, onMount } from 'svelte'
   import moment from 'moment'
   import { userStore } from './store'
   const converter = new showdown.Converter({simplifiedAutoLink: true});
@@ -31,6 +31,19 @@
     const post = await res.json()
     dispatch('update-comment', post)
   }
+
+  let highlighted
+
+  const highlightComment = async () => {
+    const url = window.location.href
+    const split = url.split('#')
+    console.log(split[1])
+    highlighted = split[1]
+  }
+
+  onMount(() => {
+    highlightComment()
+  })
 </script>
 
 <style>
@@ -46,6 +59,9 @@
   .comment-body {
     font-size: 14px;
   }
+  .comment-highlighted {
+    background-color: #d7fded;
+  }
   .remove-button {
     cursor: pointer;
   }
@@ -53,7 +69,7 @@
 
 <div class="content">
   {#each comments as comment}
-    <div class="comment-container">
+    <div class="comment-container" id="{comment.id}" class:comment-highlighted={highlighted === comment.id}>
       <div class="comment-metadata">
         <span>{ comment.author.username }</span> · <span>{ moment(comment.created).fromNow() }</span>
         {#if comment.author.id === user.id }
