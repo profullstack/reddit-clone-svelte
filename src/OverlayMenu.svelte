@@ -3,6 +3,8 @@
   import { userStore, categories, showOverlay } from './store'
   import { Link } from 'svelte-routing'
 
+  export let inboxCount
+
   let cats = []
   categories.subscribe(value => {
     cats = value
@@ -54,6 +56,19 @@
   .menu {
     margin-top: 50px;
   }
+  .vertical {
+    vertical-align: bottom;
+  }
+  #mail-icon {    
+    width: 23px;
+    fill: white;
+  }
+  #inbox-count {
+    color: white;
+    margin-left: .2em;
+    font-weight: 500;
+    font-size: 18px;
+  }
   span{
 		color: #13d583;
 		font-weight: 500;
@@ -73,6 +88,7 @@
         <Link on:click={ hideOverlay } to="/newcategory"><button class="navbar-item">Create a category</button></Link>
       </div>
       <div>
+        <Link on:click={ hideOverlay } to="/inbox"><button class="navbar-item vertical"><svg id="mail-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 435" xml:space="preserve"><g><g><path d="M496,64H16C7.168,64,0,71.168,0,80v352c0,8.832,7.168,16,16,16h480c8.832,0,16-7.168,16-16V80 C512,71.168,504.832,64,496,64z M450.384,96L256,251.504L61.616,96H450.384z M480,416H32V113.28l214,171.2 c2.928,2.352,6.464,3.52,10,3.52s7.072-1.168,10-3.504L480,113.28V416z"/></g></g></svg><span id="inbox-count">{inboxCount || ''}</span></button></Link>
         <Link on:click={ hideOverlay } to="/u/{ user.username }"><button class="navbar-item">{ user.username.toUpperCase() }</button></Link>
         <Link on:click={ logout }><button class="navbar-item">LOGOUT</button></Link>
       </div>
