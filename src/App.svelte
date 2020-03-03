@@ -10,6 +10,7 @@
 	import PostForm from './PostForm.svelte'
 	import CategoryForm from './CategoryForm.svelte'
 	import Sidebar from './Sidebar.svelte'
+	import Inbox from './Inbox.svelte'
 </script>
 
 <style>
@@ -92,6 +93,7 @@
 				<Route path="/a/:category/:postId" component={ Detail } />
 				<Route path="/compose" component={ PostForm } />
 				<Route path="/newcategory" component={ CategoryForm } />
+				<Route path="/inbox" component={ Inbox } />
 			</div>
 		</div>
 		<footer>
