@@ -86,7 +86,7 @@
 {#each inbox as message}
   <div class="post-container">
     <div class="post-title">
-      <a href="{ message.link }"> Comment on: { message.title }</a>
+      <link to="{ message.link }"> Comment on: { message.title }</link>
     </div>
 
     <div class="post-preview">

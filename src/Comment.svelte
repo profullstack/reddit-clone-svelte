@@ -39,6 +39,7 @@
     const split = url.split('#')
     console.log(split[1])
     highlighted = split[1]
+    document.getElementById(highlighted).scrollIntoView()
   }
 
   onMount(() => {
