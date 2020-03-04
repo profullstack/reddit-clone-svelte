@@ -51,6 +51,9 @@
       if (inboxCount > 9) {
         inboxCount = '9+'
       }
+      if (inboxCount == 0) {
+        unread = false
+      }
     }
   }
 
