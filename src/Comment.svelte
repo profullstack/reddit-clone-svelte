@@ -70,7 +70,7 @@
 
 <div class="content">
   {#each comments as comment}
-    <div class="comment-container" id="{comment.id}" class:comment-highlighted={highlighted === comment.id}>
+    <div class="comment-container" id="comment-id-{comment.id}" class:comment-highlighted={highlighted === `comment-id-${comment.id}`}>
       <div class="comment-metadata">
         <a href={`/u/${comment.author.username}`}>{ comment.author.username }</a> · <span>{ moment(comment.created).fromNow() }</span>
         {#if comment.author.id === user.id }
