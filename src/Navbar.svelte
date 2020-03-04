@@ -1,8 +1,11 @@
 <script>
   import { Link } from 'svelte-routing'
-  import { onMount } from 'svelte'
+  import { getContext } from 'svelte'
   import { userStore, showOverlay } from './store'
   import OverlayMenu from './OverlayMenu.svelte'
+  import {ROUTER} from 'svelte-routing/src/contexts';
+
+  const { activeRoute } = getContext(ROUTER);
 
   let inboxCount
   let unread = false
@@ -27,31 +30,31 @@
   }
 
   const getInboxCount = async (link) => {
-    const url = `API_BASE_URL/inbox/count`
-    const token = localStorage.getItem('token')
+    if (user) {
+      const url = `API_BASE_URL/inbox/count`
+      const token = localStorage.getItem('token')
 
-    const res = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
+      const res = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      if (!res.ok) alert('Something went wrong')
+
+      inboxCount = (await res.json()).count
+      if (inboxCount > 0) {
+        unread = true
       }
-    })
-
-    if (!res.ok) alert('Something went wrong')
-
-    inboxCount = (await res.json()).count
-    if (inboxCount > 0) {
-      unread = true
-    }
-    if (inboxCount > 9) {
-      inboxCount = '9+'
+      if (inboxCount > 9) {
+        inboxCount = '9+'
+      }
     }
   }
 
-  onMount(() => {
-    getInboxCount()
-  })
+  $: getInboxCount($activeRoute)
 </script>
 
 <style>
