@@ -19,7 +19,7 @@
     form.reset()
 
     const token = localStorage.getItem('token')
-
+    const name = formData.get('name');
     const url = 'API_BASE_URL/category'
     const res = await fetch(url, {
       method: 'POST',
@@ -28,13 +28,16 @@
         Authorization: `Bearer ${token}`
       },
       body: JSON.stringify({
-        name: formData.get('name'),
+        name,
         description: formData.get('description')
       })
-    })
+    }).then(res => {
+      if (!res.ok) alert('Something went wrong!')
 
-    if (!res.ok) alert('Something went wrong!')
-    window.location = '/'
+      return res.json();
+    });
+
+    navigate(`/a/${name}`);
   }
 </script>
 

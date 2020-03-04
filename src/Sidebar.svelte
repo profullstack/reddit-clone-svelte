@@ -24,11 +24,17 @@
     background-color: #f9f9f9;
     width: 200px;
     padding: 10px;
+    height: calc(100vh - 11rem);
+    width: 25rem;
+    flex-shrink: 0;
+    overflow-y: auto;
   }
+
   .sidebar ul{
     list-style: none;
     margin-bottom: 0px;
   }
+  
   @media only screen and (max-width: 850px) {
     .sidebar {
       display: none;

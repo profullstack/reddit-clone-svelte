@@ -66,6 +66,7 @@
 
     const api = 'API_BASE_URL/posts'
     const url = formData.get('url');
+    const category = formData.get('category');
 
     const res = await fetch(api, {
       method: 'POST',
@@ -75,15 +76,18 @@
       },
       body: JSON.stringify({
         type: formData.get('type'),
-        category: formData.get('category'),
+        category,
         title: formData.get('title').slice(0, 100).trim(),
         url: url && url.trim(),
         text: formData.get('text')
       })
-    })
+    }).then(res => {
+      if (!res.ok) alert('Something went wrong!')
+  
+      return res.json()
+    });
 
-    if (!res.ok) alert('Something went wrong!')
-    return navigate('/')
+    return navigate(`/a/${res.category.name}/${res.id}`);
   }
 
   const urlParams = new URLSearchParams(window.location.search)

@@ -52,6 +52,8 @@
   }
   .categories {
     margin-top: 20px;
+    max-height: 100vh;
+    overflow-y: auto;
   }
   .menu {
     margin-top: 50px;

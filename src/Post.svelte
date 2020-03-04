@@ -112,12 +112,18 @@
   <div class="voting-container">
     <span class="upvote-button"><span on:click={ upvote }>❮</span></span>
     <span>{ post.score }</span>
+  {#if post.category.name !== 'Doge'}
     <span class="downvote-button"><span on:click={ downvote }>❯</span></span>
-  </div>
+  {/if}
+</div>
 
   <div class="post-container">
     <div class="post-title">
-      <a href="{ post.url }" target="_blank">{ post.title }</a>
+      {#if withDetails}
+        <a href="{ post.url }" target="_blank">{ post.title }</a>
+      {:else}
+       <a href={`/a/${post.category.name}/${post.id}`}>{ post.title }</a>
+      {/if}
     </div>
 
     <div class="post-preview">
