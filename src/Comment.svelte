@@ -37,9 +37,8 @@
   const highlightComment = async () => {
     const url = window.location.href
     const split = url.split('#')
-    console.log(split[1])
     highlighted = split[1]
-    document.getElementById(highlighted).scrollIntoView()
+    if (document.getElementById(highlighted)) document.getElementById(highlighted).scrollIntoView()
   }
 
   onMount(() => {
