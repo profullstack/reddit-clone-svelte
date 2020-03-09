@@ -5,7 +5,7 @@
   export let username = null
   export let category = null
   let posts = []
-  let sort = '-score';
+  let sort = '-rank';
 
   $: {    
     if (category) {
@@ -40,7 +40,7 @@
 
 async function sortBy(type = 'hot') {
     if (type === 'hot') {
-      sort = '-score'
+      sort = '-rank'
     } else if (type === 'new') {
       sort = '-created'
     } else if (type === 'comments') {
