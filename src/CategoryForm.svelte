@@ -4,6 +4,8 @@
   import { userStore } from './store'
 
   let user
+  
+
   userStore.subscribe(value => {
     user = value
   })
@@ -11,6 +13,10 @@
   onMount(() => {
     if (!user) navigate('/')
   })
+
+  let msg = {
+    error: 'No message'
+  }
 
   const createCategory = async (event) => {
     event.preventDefault()
@@ -31,13 +37,24 @@
         name,
         description: formData.get('description')
       })
-    }).then(res => {
-      if (!res.ok) alert('Something went wrong!')
+    }).then(async (res) => {
+      if (!res.ok) {
+        console.log(res.clone().json())
+        let response = await res.clone().json()
+        let message = `ERROR: ${response.errors[0].param} ${response.errors[0].msg}`
+        //alert(message)
+        return { ok: false, error: message }
+      } else {
+        return { ok: true, ...res.json() }
+      }
+    })
 
-      return res.json();
-    });
+    if (res.ok) {
+      navigate(`/a/${name}`);
+    }
 
-    navigate(`/a/${name}`);
+    msg = res
+    
   }
 </script>
 
@@ -48,6 +65,8 @@
     font-size: 1em;
   }
 </style>
+
+{#if !msg.ok} <div class="message error">{msg.error}</div>{/if}
 
 <form id="create-category">
   <fieldset>
