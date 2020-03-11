@@ -15,7 +15,7 @@
   })
 
   let msg = {
-    error: 'No message'
+    error: ''
   }
 
   const createCategory = async (event) => {
