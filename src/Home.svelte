@@ -6,6 +6,7 @@
   export let category = null
   let posts = []
   let sort = '-rank';
+  let categoryData = {}
 
   $: {    
     if (category) {
@@ -29,7 +30,16 @@
     posts = await res.json()
   }
 
+  const fetchCategory = async (category) => {
+    let url = 'API_BASE_URL' + `/category/${category}`
+
+    const res = await fetch(url)
+    if (!res.ok) return alert('Failed to fetch category info!')
+    categoryData = await res.json()
+  }
+
   $: fetchPost({ username, category })
+  $: fetchCategory(category)
 
   let user
   userStore.subscribe(value => {
@@ -63,6 +73,7 @@ async function sortBy(type = 'hot') {
 
 {#if category}
 <h4><a href={`/a/${category}`}>a/{category}</a></h4>
+<p>{ categoryData.description }</p>
 {:else if username}
 <h4><a href={`/u/${username}`}>u/{username}</a></h4>
 
