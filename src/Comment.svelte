@@ -140,11 +140,12 @@
   }
 
 </style>
-
-<div class="sort">
-  <a href="javascript:void(0)" on:click={() => sort = 'top'}>Top</a> ·
-  <a href="javascript:void(0)" on:click={() => sort = 'new'}>New</a>
-</div>
+{#if comments.length > 0}
+  <div class="sort">
+    <a href="javascript:void(0)" on:click={() => sort = 'top'}>Top</a> ·
+    <a href="javascript:void(0)" on:click={() => sort = 'new'}>New</a>
+  </div>
+{/if}
 <div class="content">
   {#each comments as comment}
      <div class="voting-container">
