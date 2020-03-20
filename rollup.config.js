@@ -31,7 +31,8 @@ export default {
     css({ output: 'public/uikit.css' }),
 
     replace({
-      API_BASE_URL: process.env.API_BASE_URL
+      API_BASE_URL: process.env.API_BASE_URL,
+      BASE_URL: process.env.BASE_URL,
     }),
 
     // If you have external dependencies installed from

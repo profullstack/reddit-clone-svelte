@@ -18,7 +18,9 @@
     document.querySelector('meta[name="description"]').setAttribute("content", post.text || post.title);
     document.querySelector('meta[property="og:description"]').setAttribute("content", post.text || post.title);
     document.querySelector('meta[property="og:title"]').setAttribute('content', post.title);
+    document.querySelector('meta[property="og:url"]').setAttribute('content', `BASE_URL/a/${post.category.name}/${post.id}`);
     document.querySelector('meta[name="twitter:title"]').setAttribute('content', post.title);
+    document.querySelector('meta[name="twitter:url"]').setAttribute('content', `BASE_URL/a/${post.category.name}/${post.id}`);
     
     if (post.thumb) {
       document.querySelector('meta[property="og:image"]').setAttribute('content', post.thumb);
