@@ -12,7 +12,8 @@
   let sort
   let type
   let categoryData = {}
-  let page = 1
+  let page = 0
+  let morePosts
 
   let currentCat
   currentCategory.subscribe(value => {
@@ -51,19 +52,20 @@
     else if (category) url += `/posts/${category}?sort=${sort}&page=${page}`
     else url += `/posts?sort=${sort}&page=${page}`
 
-    const res = await fetch(url)
+    let res = await fetch(url)
     if (!res.ok) return alert('Something wrong!')
-    let post = await res.json()
-    if (page > 1) {
-      posts = posts.concat(post)
+    res = await res.json()
+    morePosts = res.more
+    if (page > 0) {
+      posts = posts.concat(res.posts)
     }
     else {
-      posts = post
+      posts = res.posts
     }
   }
 
   const fetchCategory = async (category) => {
-    page = 1
+    page = 0
     let url = 'API_BASE_URL' + `/category/${category}`
 
     const res = await fetch(url)
@@ -102,17 +104,17 @@
 
 {/if}
 <nav class="topnav">
-  <Link to="{$activeRoute.uri}?sort=hot" on:click={ () => page = 1 }>Hot</Link>
-  <Link to="{$activeRoute.uri}?sort=new" on:click={ () => page = 1 }>New</Link>
-  <Link to="{$activeRoute.uri}?sort=top" on:click={ () => page = 1 }>Top</Link>
-  <Link to="{$activeRoute.uri}?sort=comments" on:click={ () => page = 1 }>Comments</Link>
-  <Link to="{$activeRoute.uri}?sort=not" on:click={ () => page = 1 }>Controversial</Link>
+  <Link to="{$activeRoute.uri}?sort=hot" on:click={ () => page = 0 }>Hot</Link>
+  <Link to="{$activeRoute.uri}?sort=new" on:click={ () => page = 0 }>New</Link>
+  <Link to="{$activeRoute.uri}?sort=top" on:click={ () => page = 0 }>Top</Link>
+  <Link to="{$activeRoute.uri}?sort=comments" on:click={ () => page = 0 }>Comments</Link>
+  <Link to="{$activeRoute.uri}?sort=not" on:click={ () => page = 0 }>Controversial</Link>
   <a href={`/api/1/${(username ? 'user' : 'posts' )}/${category || username ? (category || username)+'/' : ''}rss?sort=${sort}`}>RSS</a>
 </nav>
 {#each posts as post}
   <Post { post }></Post>
 {/each}
 
-{#if posts.length > 0}
+{#if posts.length > 0 && morePosts}
   <a href="javascript:void(0)" on:click={ () => page += 1 }><button>Load More</button></a>
 {/if}
