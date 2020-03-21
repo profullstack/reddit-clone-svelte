@@ -12,6 +12,7 @@
   let sort
   let type
   let categoryData = {}
+  let page = 1
 
   let currentCat
   currentCategory.subscribe(value => {
@@ -36,6 +37,35 @@
   }
 
   const fetchPost = async ({ type, username, category }) => {
+    await sorter()
+
+    let url = 'API_BASE_URL'
+
+    if (username) url += `/user/${username}?sort=${sort}&page=${page}`
+    else if (category) url += `/posts/${category}?sort=${sort}&page=${page}`
+    else url += `/posts?sort=${sort}&page=${page}`
+
+    const res = await fetch(url)
+    if (!res.ok) return alert('Something wrong!')
+    let post = await res.json()
+    if (page > 1) {
+      posts = posts.concat(post)
+    }
+    else {
+      posts = post
+    }
+  }
+
+  const fetchCategory = async (category) => {
+    page = 1
+    let url = 'API_BASE_URL' + `/category/${category}`
+
+    const res = await fetch(url)
+    if (!res.ok) return alert('Failed to fetch category info!')
+    categoryData = await res.json()
+  }
+
+  const sorter = () => {
     const urlParams = new URLSearchParams(window.location.search)
     type = urlParams.get('sort')
     
@@ -46,37 +76,15 @@
     } else if (type === 'new') {
       sort = '-created'
     } else if (type === 'comments') {
-      sort = '-score';
+      sort = 'comments';
     } else if (type === 'not') {
       sort = '+score';
     }
 
-    let url = 'API_BASE_URL'
-
-    if (username) url += `/user/${username}?sort=${sort}`
-    else if (category) url += `/posts/${category}?sort=${sort}`
-    else url += `/posts?sort=${sort}`
-
-    const res = await fetch(url)
-    if (!res.ok) return alert('Something wrong!')
-    posts = await res.json()
-  
-    posts = posts.sort((a, b) => {
-      if (type === 'comments') {
-        return b.commentCount - a.commentCount;
-      }
-    });
+    return true;
   }
 
-  const fetchCategory = async (category) => {
-    let url = 'API_BASE_URL' + `/category/${category}`
-
-    const res = await fetch(url)
-    if (!res.ok) return alert('Failed to fetch category info!')
-    categoryData = await res.json()
-  }
-
-  $: fetchPost({ type, username, category, $activeRoute })
+  $: fetchPost({ type, username, category, page, $activeRoute })
   $: fetchCategory(category)
 </script>
 
@@ -88,13 +96,17 @@
 
 {/if}
 <nav class="topnav">
-  <Link to="{$activeRoute.uri}?sort=hot">Hot</Link>
-  <Link to="{$activeRoute.uri}?sort=new">New</Link>
-  <Link to="{$activeRoute.uri}?sort=top">Top</Link>
-  <Link to="{$activeRoute.uri}?sort=comments">Comments</Link>
-  <Link to="{$activeRoute.uri}?sort=not">Controversial</Link>
+  <Link to="{$activeRoute.uri}?sort=hot" on:click={ () => page = 1 }>Hot</Link>
+  <Link to="{$activeRoute.uri}?sort=new" on:click={ () => page = 1 }>New</Link>
+  <Link to="{$activeRoute.uri}?sort=top" on:click={ () => page = 1 }>Top</Link>
+  <Link to="{$activeRoute.uri}?sort=comments" on:click={ () => page = 1 }>Comments</Link>
+  <Link to="{$activeRoute.uri}?sort=not" on:click={ () => page = 1 }>Controversial</Link>
   <a href={`/api/1/${(username ? 'user' : 'posts' )}/${category || username ? (category || username)+'/' : ''}rss?sort=${sort}`}>RSS</a>
 </nav>
 {#each posts as post}
   <Post { post }></Post>
 {/each}
+
+{#if posts.length > 0}
+  <a href="javascript:void(0)" on:click={ () => page += 1 }><button>Load More</button></a>
+{/if}
