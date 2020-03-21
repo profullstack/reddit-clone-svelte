@@ -26,13 +26,19 @@
     }
   })
 
-  $: {    
+  $: {
+    const rss = document.querySelector('link[type="application/rss+xml"]');
+          
     if (category) {
       document.title = `${category} - upvotocracy.com`
+      rss.setAttribute('href', `https://upvotocracy.com/api/1/posts/${category}/rss?sort=-created`);
+      rss.setAttribute('title', `Upvotocracy ${category} RSS Feed`);
       currentCategory.set(category)
     }
     else {
       document.title = 'upvotocracy.com'
+      rss.setAttribute('href', `https://upvotocracy.com/api/1/posts/rss?sort=-created`);
+      rss.setAttribute('title', `Upvotocracy RSS Feed`);
     }
   }
 
