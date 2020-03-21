@@ -95,6 +95,11 @@
   $: fetchPost({ type, username, category, page, $activeRoute })
   $: fetchCategory(category)
 </script>
+<style>
+  .load-more {
+    text-align: center;
+  }
+</style>
 
 {#if category}
 <h4><a href={`/a/${category}`}>a/{category}</a></h4>
@@ -116,5 +121,7 @@
 {/each}
 
 {#if posts.length > 0 && morePosts}
-  <a href="javascript:void(0)" on:click={ () => page += 1 }><button>Load More</button></a>
+  <div class="load-more">
+    <button on:click={ () => page += 1 }>Load More</button>
+  </div>
 {/if}
