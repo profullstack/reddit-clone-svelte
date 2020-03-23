@@ -115,11 +115,17 @@ const sorter = () => {
   .load-more {
     text-align: center;
   }
+  .topnav {
+    margin: 1rem 0;
+  }
 </style>
 
 {#if category}
   <h4><a href={`/a/${category}`}>a/{category}</a></h4>
-  <p>{ categoryData.description }</p>
+  <div>{ categoryData.description }</div>
+  {#if categoryData.owner}
+    <div>Created by <a href={`/u/${categoryData.owner.username}`}>{ categoryData.owner.username }</a></div>
+  {/if}
 {:else if pageUser}
   <h4>
     <a href={`/u/${pageUser.username}`}>u/{pageUser.username} ({abbreviateNumber(pageUser.karma || 0)})</a>
