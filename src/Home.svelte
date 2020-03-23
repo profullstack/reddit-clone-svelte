@@ -120,7 +120,7 @@ const sorter = () => {
 <h4><a href={`/a/${category}`}>a/{category}</a></h4>
 <p>{ categoryData.description }</p>
 {:else if pageUser}
-<h4><a href={`/u/${pageUser.username}`}>u/{pageUser.username}</a> ({abbreviateNumber(pageUser.karma || 0)})</h4>
+<h4><a href={`/u/${pageUser.username}`}>u/{pageUser.username} ({abbreviateNumber(pageUser.karma || 0)})</a></h4>
 {/if}
 <nav class="topnav">
   <Link to="{$activeRoute.uri}?sort=hot" on:click={ () => page = 0 }>Hot</Link>
