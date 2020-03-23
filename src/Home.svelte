@@ -4,6 +4,8 @@
   import { onMount, getContext } from 'svelte'
   import { userStore, currentCategory } from './store'
   import {ROUTER} from 'svelte-routing/src/contexts';
+  import { abbreviateNumber } from './utils/abbreviateNumber';
+
   const { activeRoute } = getContext(ROUTER);
 
   export let username = null
@@ -21,6 +23,8 @@
   })
 
   let user
+  let pageUser
+
   userStore.subscribe(value => {
     if (value) {
       user = value
@@ -73,7 +77,17 @@
     categoryData = await res.json()
   }
 
-  const sorter = () => {
+  const fetchUser = async (username) => {
+    if (!username) return;
+
+    let url = 'API_BASE_URL' + `/users/${username}`
+
+    const res = await fetch(url)
+    if (!res.ok) return alert('Failed to fetch user info!')
+    pageUser = await res.json()
+  }
+
+const sorter = () => {
     const urlParams = new URLSearchParams(window.location.search)
     type = urlParams.get('sort')
     
@@ -94,6 +108,7 @@
 
   $: fetchPost({ type, username, category, page, $activeRoute })
   $: fetchCategory(category)
+  $: fetchUser(username);
 </script>
 <style>
   .load-more {
@@ -104,9 +119,8 @@
 {#if category}
 <h4><a href={`/a/${category}`}>a/{category}</a></h4>
 <p>{ categoryData.description }</p>
-{:else if username}
-<h4><a href={`/u/${username}`}>u/{username}</a></h4>
-
+{:else if pageUser}
+<h4><a href={`/u/${pageUser.username}`}>u/{pageUser.username}</a> ({abbreviateNumber(pageUser.karma || 0)})</h4>
 {/if}
 <nav class="topnav">
   <Link to="{$activeRoute.uri}?sort=hot" on:click={ () => page = 0 }>Hot</Link>
