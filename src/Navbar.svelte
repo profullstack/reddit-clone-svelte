@@ -67,10 +67,15 @@
     height: 3rem;
   }
   .navbar {
-    padding-bottom: 1em;
-    border-bottom: .1em solid #d1d1d1;
-    margin-top: 2em;
+    margin-top: 0;
+    padding: 1em;
+    border-bottom: 2px solid #d1d1d1;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: white;
   }
+
   .float-right {
     display: flex;
   }

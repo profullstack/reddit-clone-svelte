@@ -62,7 +62,8 @@
 		justify-content: flex-start;
 	}
 	.content {
-		margin-top: 20px;
+		margin-top: 2rem;
+		padding: 1rem;
 		word-wrap: anywhere;
 		width: 100%;
 	}
@@ -106,19 +107,20 @@
 				<Route path="/newcategory" component={ CategoryForm } />
 				<Route path="/inbox" component={ Inbox } />
 				<Route path="/leaderboard" component={ Leaderboard } />
+
+				<footer>
+					<a href="/leaderboard">Leaderboard</a>
+					<a id="bookmarklet" href="#" title="Drag to bookmark bar">Bookmarklet</a>
+					<a href="https://upvotocracy.com/api/1/posts/rss">RSS</a>
+					<a href="mailto:hello@upvotocracy.com?subject=Upvotocracy">hello@upvotocracy.com</a>
+					<a href="https://github.com/profullstack/reddit-clone-svelte">github</a>
+					<a href="https://nullvideo.com">nullvideo.com</a>
+					<a href="https://virusoutbreak.wtf">VirusOUTBREAK</a>
+					<a href="https://theultimateprepper.com">The Ultimate Prepper</a>
+					<a href="https://profullstack.com">Profullstack.com</a>
+					<span class="legal">&copy; 2020</span>
+				</footer>
 			</div>
 		</div>
-		<footer>
-			<a href="/leaderboard">Leaderboard</a>
-			<a id="bookmarklet" href="#" title="Drag to bookmark bar">Bookmarklet</a>
-			<a href="https://upvotocracy.com/api/1/posts/rss">RSS</a>
-			<a href="mailto:hello@upvotocracy.com?subject=Upvotocracy">hello@upvotocracy.com</a>
-			<a href="https://github.com/profullstack/reddit-clone-svelte">github</a>
-			<a href="https://nullvideo.com">nullvideo.com</a>
-			<a href="https://virusoutbreak.wtf">VirusOUTBREAK</a>
-			<a href="https://theultimateprepper.com">The Ultimate Prepper</a>
-			<a href="https://profullstack.com">Profullstack.com</a>
-			<span class="legal">&copy; 2020</span>
-		</footer>
 	</div>
 </Router>

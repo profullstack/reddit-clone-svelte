@@ -35,7 +35,7 @@
     background-color: #eafff6;
     position: fixed;
     z-index: 1;
-    top: 0;
+    top: 6.8rem;
     left: 0;
     text-align: center;
   }
