@@ -87,7 +87,15 @@
         return b.created - a.created;
       });
     }
-  }
+
+    if (sort == 'original') {
+      comments = comments.sort((a, b) => {
+        b.created = new Date(b.created)
+        a.created = new Date(a.created)
+        return a.created - b.created;
+      });
+    }
+}
 
   $: sortComments(sort)
 
@@ -142,8 +150,9 @@
 </style>
 {#if comments.length > 0}
   <div class="sort">
-    <a href="javascript:void(0)" on:click={() => sort = 'top'}>Top</a> ·
-    <a href="javascript:void(0)" on:click={() => sort = 'new'}>New</a>
+    <a href="javascript:void(0)" on:click={() => sort = 'top'}>Top</a> . 
+    <a href="javascript:void(0)" on:click={() => sort = 'new'}>New</a> .
+    <a href="javascript:void(0)" on:click={() => sort = 'original'}>Original</a>
   </div>
 {/if}
 <div class="content">
