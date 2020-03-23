@@ -74,6 +74,7 @@
 		justify-content: flex-end;
 		align-items: flex-end;
 		flex-wrap: wrap;
+		margin: 2rem;
 	}
 
 	footer > * {

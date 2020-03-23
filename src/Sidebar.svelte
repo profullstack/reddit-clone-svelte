@@ -7,6 +7,16 @@
   let filtered = [];
   let search = '';
 
+  function sort(type) {
+    filtered = filtered.sort((a, b) => {
+      if (type === 'new') {
+        return new Date(b.created).getTime() - new Date(a.created).getTime();
+      }
+
+      return new Date(a.created).getTime() - new Date(b.created).getTime();
+    });
+  }
+
   function filterCategories() {
     filtered = cats.filter(c => {
       if (c.name.toLowerCase().indexOf(search.toLowerCase()) > -1){
@@ -49,6 +59,10 @@
     padding-top: 1rem;
     background-color: #f9f9f9;
   }
+  
+  .sidebar header nav {
+    padding: 1rem 0;
+  }
 
   .sidebar ul{
     list-style: none;
@@ -70,6 +84,10 @@
   <header>
     <h3>Categories</h3>
     <input type="text" bind:value={search} on:keyup={filterCategories} />
+    <nav>
+      Sort: <a href="javascript:void(0)" on:click|preventDefault={() => sort('new')}>New</a>
+      <a href="javascript:void(0)" on:click|preventDefault={() => sort('original')}>Original</a>
+    </nav>
   </header>
   <ul>
     {#each filtered as category}
