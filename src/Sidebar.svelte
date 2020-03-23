@@ -34,13 +34,20 @@
     justify-content: space-between;
     background-color: #f9f9f9;
     width: 200px;
-    padding: 1rem;
+    padding: 0 1rem 1rem;
     height: calc(100vh - 6.8rem);
     width: 25rem;
     flex-shrink: 0;
     overflow-y: auto;
     position: sticky;
     top: 6.8rem;
+  }
+
+  .sidebar header {
+    position: sticky;
+    top: 0;
+    padding-top: 1rem;
+    background-color: #f9f9f9;
   }
 
   .sidebar ul{
@@ -60,8 +67,10 @@
 </style>
 
 <div class="sidebar">
-  <h3> Categories </h3>
-  <input type="text" bind:value={search} on:keyup={filterCategories} />
+  <header>
+    <h3>Categories</h3>
+    <input type="text" bind:value={search} on:keyup={filterCategories} />
+  </header>
   <ul>
     {#each filtered as category}
       <li>
