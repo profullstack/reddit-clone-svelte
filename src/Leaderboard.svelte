@@ -2,7 +2,12 @@
 
 <ol>
 {#each leaders as user}
-    <li><a href="/u/{user.username}">{user.username}</a> {user.karma}</li>
+    <li>
+        <a href="/u/{user.username}">{user.username}</a> {user.karma}
+        {#if user.created}
+            <span class="meta">Joined {timeSince(user.created)} ago</span>
+        {/if}
+    </li>
 {/each}
 </ol>
 
@@ -10,6 +15,7 @@
 
 import { onMount } from 'svelte';
 import { abbreviateNumber } from './utils/abbreviateNumber';
+import { timeSince } from './utils/time';
 
 let leaders = [];
 

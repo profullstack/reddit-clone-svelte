@@ -5,6 +5,7 @@
   import { userStore, currentCategory } from './store'
   import {ROUTER} from 'svelte-routing/src/contexts';
   import { abbreviateNumber } from './utils/abbreviateNumber';
+  import { timeSince } from './utils/time';
 
   const { activeRoute } = getContext(ROUTER);
 
@@ -117,11 +118,17 @@ const sorter = () => {
 </style>
 
 {#if category}
-<h4><a href={`/a/${category}`}>a/{category}</a></h4>
-<p>{ categoryData.description }</p>
+  <h4><a href={`/a/${category}`}>a/{category}</a></h4>
+  <p>{ categoryData.description }</p>
 {:else if pageUser}
-<h4><a href={`/u/${pageUser.username}`}>u/{pageUser.username} ({abbreviateNumber(pageUser.karma || 0)})</a></h4>
+  <h4>
+    <a href={`/u/${pageUser.username}`}>u/{pageUser.username} ({abbreviateNumber(pageUser.karma || 0)})</a>
+  </h4>
+  {#if pageUser.created}
+  <p>Joined {timeSince(pageUser.created)} ago</p>
+  {/if}
 {/if}
+
 <nav class="topnav">
   <Link to="{$activeRoute.uri}?sort=hot" on:click={ () => page = 0 }>Hot</Link>
   <Link to="{$activeRoute.uri}?sort=new" on:click={ () => page = 0 }>New</Link>
