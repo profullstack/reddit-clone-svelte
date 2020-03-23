@@ -33,7 +33,7 @@
     }
 
     if (!title) {
-        document.getElementById('title').value = res.title.slice(0, 100).trim();      
+        document.getElementById('title').value = res.title.slice(0, 200).trim();      
     }
   }
 
@@ -90,7 +90,7 @@
       body: JSON.stringify({
         type: formData.get('type'),
         category,
-        title: formData.get('title').slice(0, 100).trim(),
+        title: formData.get('title').slice(0, 200).trim(),
         url: url && url.trim(),
         text: formData.get('text'),
         thumb,
