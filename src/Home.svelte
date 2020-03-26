@@ -124,7 +124,7 @@ const sorter = () => {
   <h4><a href={`/a/${category}`}>a/{category}</a></h4>
   <div>{ categoryData.description }</div>
   {#if categoryData.owner}
-    <div>Created by <a href={`/u/${categoryData.owner.username}`}>{ categoryData.owner.username }</a></div>
+    <div>Created by <a href={`/u/${categoryData.owner.username}`}>{ categoryData.owner.username }</a> {timeSince(categoryData.created)} ago.</div>
   {/if}
 {:else if pageUser}
   <h4>

@@ -63,6 +63,12 @@
   async function getTitle(url) {
     return fetch('API_BASE_URL/retrieve?url='+url)
       .then(res => res.json())
+      .then(res => {
+        console.log(res.title);
+        res.title = res.title.slice(0, 200).trim();
+        console.log(res.title);
+        return res;
+      })
       .catch(console.error);
   }
 
