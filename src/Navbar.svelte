@@ -31,11 +31,9 @@
   }
 
   const getInboxCount = async (link) => {
-    console.log(user, 'user');
     if (user) {
       const url = `API_BASE_URL/inbox/count`
       const token = localStorage.getItem('token')
-      console.log(token);
 
       const res = await fetch(url, {
         method: 'GET',
@@ -62,7 +60,7 @@
   }
 
 
-  $: getInboxCount(activeRoute)
+  $: getInboxCount($activeRoute)
 </script>
 
 <style>
