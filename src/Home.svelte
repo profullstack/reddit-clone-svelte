@@ -49,7 +49,7 @@
   }
 
   const fetchPost = async ({ type, username, category }) => {
-    await sorter()
+    sorter()
 
     let url = 'API_BASE_URL'
 
@@ -58,6 +58,7 @@
     else url += `/posts?sort=${sort}&page=${page}`
 
     let res = await fetch(url)
+      .catch(console.error);
     if (!res.ok) return alert('Something wrong!')
     res = await res.json()
     morePosts = res.more
@@ -70,10 +71,12 @@
   }
 
   const fetchCategory = async (category) => {
+    if (!category) return;
     page = 0
     let url = 'API_BASE_URL' + `/category/${category}`
 
     const res = await fetch(url)
+    .catch(console.error)
     if (!res.ok) return alert('Failed to fetch category info!')
     categoryData = await res.json()
   }
@@ -84,6 +87,7 @@
     let url = 'API_BASE_URL' + `/users/${username}`
 
     const res = await fetch(url)
+    .catch(console.error);
     if (!res.ok) return alert('Failed to fetch user info!')
     pageUser = await res.json()
   }
