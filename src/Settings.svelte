@@ -1,6 +1,7 @@
 <script>
 import { navigate } from 'svelte-routing'
 import { userStore } from './store'
+import { onMount } from 'svelte'
 
 let user
 $: fetchMe();
@@ -49,6 +50,7 @@ const updateBT = async (event) => {
   })
 
   if (!res.ok) alert('Something went wrong!')
+
 }
 
 const updateLinks = async (event) => {
@@ -64,7 +66,6 @@ const updateLinks = async (event) => {
       links.push({name: formData.get(`link-name${i}`), url: formData.get(`link-url${i}`)})
     }
   }
-  console.log(numLinks, user.links.length)
   const url = 'API_BASE_URL/me/links'
   const res = await fetch(url, {
     method: 'POST',
@@ -78,7 +79,6 @@ const updateLinks = async (event) => {
   })
 
   if (!res.ok) alert('Something went wrong!')
-  return location.reload();
 }
 
   const fetchMe = async () => {
@@ -126,7 +126,10 @@ const updateLinks = async (event) => {
       <legend>Social Links</legend>
       {#each user.links as link} 
         <span>Link {user.links.indexOf(link) + 1}</span>
+<<<<<<< 1f9871809d58dad65d6aedf8382a183f9f7155dc
         {#if isEditingFieldLinks} <a href="#" class="float-right" on:click={(e) => deleteLink(e, user.links.indexOf(link))}>Delete</a> {/if}
+=======
+>>>>>>> Removed log statements, reload on submit, fixed links bug
         <input type="text" placeholder="Name" name={`link-name${user.links.indexOf(link)}`} value={link.name} disabled={!isEditingFieldLinks}>
         <input type="text" placeholder="Url" name={`link-url${user.links.indexOf(link)}`} value={link.url} disabled={!isEditingFieldLinks}>
       {/each}
