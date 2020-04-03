@@ -1,7 +1,6 @@
 <script>
 import { navigate } from 'svelte-routing'
 import { userStore } from './store'
-import decode from 'jwt-decode'
 
 let user
   userStore.subscribe(value => {
@@ -46,14 +45,6 @@ const updateBT = async (event) => {
   })
 
   if (!res.ok) alert('Something went wrong!')
-  
-  try {
-    console.log(decode(token))
-    userStore.update(() => decode(token).user)
-    localStorage.setItem('token', token)
-  } catch (error) {
-    console.log(error)
-  }
 }
 
 const updateLinks = async (event) => {
