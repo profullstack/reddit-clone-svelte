@@ -7,6 +7,9 @@
         {#if user.created}
             <span class="meta">Joined {timeSince(user.created)} ago</span>
         {/if}
+        {#if user.bitcoinAddress}
+            <span class="bitcoin">Bitcoin: <a href="bitcoin:{user.bitcoinAddress}">{user.bitcoinAddress}</a></span>
+        {/if}
     </li>
 {/each}
 </ol>

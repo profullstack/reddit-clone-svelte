@@ -176,7 +176,7 @@ const sorter = () => {
     {#if pageUser.bitcoinAddress}
     <div>Bitcoin: <a href={`bitcoin:${pageUser.bitcoinAddress}`}>{pageUser.bitcoinAddress}</a></div>
     {/if}
-    {#if pageUser.links}
+    {#if pageUser.links.length}
     <div>Links:</div>
     <ul class="links">
       {#each pageUser.links as link}
