@@ -126,10 +126,14 @@ const updateLinks = async (event) => {
       <legend>Social Links</legend>
       {#each user.links as link} 
         <span>Link {user.links.indexOf(link) + 1}</span>
+<<<<<<< fb928b2e242eae5e3dde0f8ef71cf582351d2e30
 <<<<<<< 1f9871809d58dad65d6aedf8382a183f9f7155dc
         {#if isEditingFieldLinks} <a href="#" class="float-right" on:click={(e) => deleteLink(e, user.links.indexOf(link))}>Delete</a> {/if}
 =======
 >>>>>>> Removed log statements, reload on submit, fixed links bug
+=======
+        {#if isEditingFieldLinks} <a href="#" class="float-right" on:click={(e) => deleteLink(e, user.links.indexOf(link))}>Delete</a> {/if}
+>>>>>>> Added delete option
         <input type="text" placeholder="Name" name={`link-name${user.links.indexOf(link)}`} value={link.name} disabled={!isEditingFieldLinks}>
         <input type="text" placeholder="Url" name={`link-url${user.links.indexOf(link)}`} value={link.url} disabled={!isEditingFieldLinks}>
       {/each}
