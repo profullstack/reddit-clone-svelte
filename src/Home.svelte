@@ -6,6 +6,7 @@
   import {ROUTER} from 'svelte-routing/src/contexts';
   import { abbreviateNumber } from './utils/abbreviateNumber';
   import { timeSince } from './utils/time';
+  import { addSubscription, removeSubscription } from './editSubscriptions';
 
   const { activeRoute } = getContext(ROUTER);
 
@@ -140,10 +141,22 @@ const sorter = () => {
   .topnav {
     margin: 1rem 0;
   }
+  .category {
+    margin-bottom: 0.8rem;
+  }
 </style>
 
 {#if category}
-  <h4><a href={`/a/${category}`}>a/{category}</a></h4>
+  <h4 class="category">
+    <a href={`/a/${category}`}>a/{category}</a>
+  </h4>
+  {#if user}
+    {#if user.subscriptions.includes(categoryData._id)}
+      <button href="javascript:void(0)" on:click={() => removeSubscription(categoryData._id)}>Leave</button>
+    {:else}
+      <button href="javascript:void(0)" on:click={() => addSubscription(categoryData._id)}>Join</button>
+    {/if}
+  {/if}
   <div>{ categoryData.description }</div>
   {#if categoryData.owner}
     <div>Created by <a href={`/u/${categoryData.owner.username}`}>{ categoryData.owner.username }</a> {timeSince(categoryData.created)} ago.</div>
