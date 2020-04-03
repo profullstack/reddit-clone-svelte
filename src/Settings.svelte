@@ -1,18 +1,13 @@
 <script>
 import { navigate } from 'svelte-routing'
 import { userStore } from './store'
+import { onMount } from 'svelte'
 
 let user
-  userStore.subscribe(value => {
-    user = value
-  })
-
+$: fetchMe();
 let isEditingFieldBT = false;
 let isEditingFieldLinks = false;
-let socialLinks = user.links
-
 let numLinks = 1;
-console.log(user)
 
 const newLink = (event) => {
   event.preventDefault()
@@ -21,7 +16,7 @@ const newLink = (event) => {
   }
   if (user.links.length > 0 && user.links.length < 3) {
     user.links.push({name: "", url: ""});
-    socialLinks = user.links;
+    user.links = user.links;
   }
 }
 
@@ -45,6 +40,8 @@ const updateBT = async (event) => {
   })
 
   if (!res.ok) alert('Something went wrong!')
+
+  return location.reload();
 }
 
 const updateLinks = async (event) => {
@@ -55,13 +52,12 @@ const updateLinks = async (event) => {
   form.reset()
   let links = []
 
-  for (i=0; i < numLinks; i++) {
+  for (i=0; i < Math.max(numLinks, user.links.length); i++) {
     if (formData.get(`link-name${i}`) != "" && formData.get(`link-url${i}`) != "") {
       links.push({name: formData.get(`link-name${i}`), url: formData.get(`link-url${i}`)})
     }
   }
 
-  console.log(links);
   const url = 'API_BASE_URL/me/links'
   const res = await fetch(url, {
     method: 'POST',
@@ -75,7 +71,7 @@ const updateLinks = async (event) => {
   })
 
   if (!res.ok) alert('Something went wrong!')
-  return navigate('/')
+  return location.reload();
 }
 
   const fetchMe = async () => {
@@ -93,8 +89,6 @@ const updateLinks = async (event) => {
     user = await res.json();
     userStore.set(user);
   }
-
-$: fetchMe();
 
 </script>
 
@@ -120,13 +114,13 @@ $: fetchMe();
 
 
 <form id="links">
-  {#if socialLinks.length > 0}
+  {#if user.links.length > 0}
     <fieldset>
       <legend>Social Links</legend>
-      {#each socialLinks as link} 
-        <span>Link {socialLinks.indexOf(link) + 1}</span>
-        <input type="text" placeholder="Name" name={`link-name${socialLinks.indexOf(link)}`} value={link.name} disabled={!isEditingFieldLinks}>
-        <input type="text" placeholder="Url" name={`link-url${socialLinks.indexOf(link)}`} value={link.url} disabled={!isEditingFieldLinks}>
+      {#each user.links as link} 
+        <span>Link {user.links.indexOf(link) + 1}</span>
+        <input type="text" placeholder="Name" name={`link-name${user.links.indexOf(link)}`} value={link.name} disabled={!isEditingFieldLinks}>
+        <input type="text" placeholder="Url" name={`link-url${user.links.indexOf(link)}`} value={link.url} disabled={!isEditingFieldLinks}>
       {/each}
       {#if !isEditingFieldLinks}
         <button class="button-primary float-right" type="submit" on:click={(e) => {e.preventDefault(); isEditingFieldLinks = !isEditingFieldLinks}}>Edit</button>
