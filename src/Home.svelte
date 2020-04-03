@@ -196,7 +196,11 @@ const sorter = () => {
   <Link to="{$activeRoute.uri}?sort=top" on:click={ () => page = 0 }>Top</Link>
   <Link to="{$activeRoute.uri}?sort=comments" on:click={ () => page = 0 }>Comments</Link>
   <Link to="{$activeRoute.uri}?sort=not" on:click={ () => page = 0 }>Controversial</Link>
-  <a href={`/api/1/${(username ? 'user' : 'posts' )}/${category || username ? (category || username)+'/' : ''}rss?sort=${sort}`}>RSS</a>
+  {#if subscriptions}
+    <a href={`/api/1/posts/rss/${user.id}`}>RSS</a>
+  {:else}
+    <a href={`/api/1/${(username ? 'user' : 'posts' )}/${category || username ? (category || username)+'/' : ''}rss?sort=${sort}`}>RSS</a>
+  {/if}
 </nav>
 {#each posts as post}
   <Post { post }></Post>
