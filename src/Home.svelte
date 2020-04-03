@@ -12,6 +12,7 @@
 
   export let username = null
   export let category = null
+  export let subscriptions = null
   let posts = []
   let sort
   let type
@@ -53,12 +54,18 @@
     sorter()
 
     let url = 'API_BASE_URL'
+    let headers
 
     if (username) url += `/user/${username}?sort=${sort}&page=${page}`
     else if (category) url += `/posts/${category}?sort=${sort}&page=${page}`
+    else if (subscriptions) {
+      const token = localStorage.getItem('token')
+      headers = { Authorization: `Bearer ${token}` }
+      url += `/subscriptions?sort=${sort}&page=${page}`
+    }
     else url += `/posts?sort=${sort}&page=${page}`
 
-    let res = await fetch(url)
+    let res = await fetch(url, { headers })
       .catch(console.error);
     if (!res.ok) return alert('Something wrong!')
     res = await res.json()

@@ -94,6 +94,9 @@
   <header>
     <h3>Categories</h3>
     <input type="text" bind:value={search} on:keyup={filterCategories} />
+    {#if user}
+    <Link to="/home"><button>My Categories</button></Link>
+    {/if}
     <nav>
       Sort: <a href="javascript:void(0)" on:click|preventDefault={() => sort('new')}>New</a>
       <a href="javascript:void(0)" on:click|preventDefault={() => sort('original')}>Original</a>
