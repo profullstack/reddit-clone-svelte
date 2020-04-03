@@ -216,6 +216,7 @@
                 src={`https://www.youtube.com/embed/${youtubeId[1]}?origin=https://plyr.io&amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1`}
                 allowfullscreen
                 allowtransparency
+                title="YouTube"
             ></iframe>
         </div>
         {:else if nullvideo}

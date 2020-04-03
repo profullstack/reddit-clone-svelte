@@ -41,7 +41,6 @@ const updateBT = async (event) => {
       Authorization: `Bearer ${token}`
     },
     body: JSON.stringify({
-      username: user.username,
       bitcoinaddress: formData.get('bitcoinAddress')
     })
   })
@@ -71,6 +70,7 @@ const updateLinks = async (event) => {
     }
   }
 
+  console.log(links);
   const url = 'API_BASE_URL/me/links'
   const res = await fetch(url, {
     method: 'POST',
@@ -79,7 +79,6 @@ const updateLinks = async (event) => {
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
-      username: user.username,
       socialLinks: links
     })
   })
@@ -87,6 +86,24 @@ const updateLinks = async (event) => {
   if (!res.ok) alert('Something went wrong!')
   return navigate('/')
 }
+
+  const fetchMe = async () => {
+    let url = 'API_BASE_URL/me';
+    const token = localStorage.getItem('token');
+
+    const res = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .catch(console.error);
+
+    if (!res.ok) return alert('Failed to fetch user info!')
+    user = await res.json();
+    userStore.set(user);
+  }
+
+$: fetchMe();
 
 </script>
 

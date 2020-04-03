@@ -92,6 +92,23 @@
     pageUser = await res.json()
   }
 
+  const fetchMe = async () => {
+    if (!user) return;
+    let url = 'API_BASE_URL/me';
+    const token = localStorage.getItem('token');
+
+    const res = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .catch(console.error);
+
+    if (!res.ok) return alert('Failed to fetch user info!')
+    user = await res.json();
+    userStore.set(user);
+  }
+
 const sorter = () => {
     const urlParams = new URLSearchParams(window.location.search)
     type = urlParams.get('sort')
@@ -114,6 +131,7 @@ const sorter = () => {
   $: fetchPost({ type, username, category, page, $activeRoute })
   $: fetchCategory(category)
   $: fetchUser(username);
+  $: fetchMe();
 </script>
 <style>
   .load-more {
@@ -134,6 +152,19 @@ const sorter = () => {
   <h4>
     <a href={`/u/${pageUser.username}`}>u/{pageUser.username} ({abbreviateNumber(pageUser.karma || 0)})</a>
   </h4>
+  <div class="bio">
+    {#if pageUser.bitcoinAddress}
+    <div>Bitcoin: <a href={`bitcoin:${pageUser.bitcoinAddress}`}>{pageUser.bitcoinAddress}</a></div>
+    {/if}
+    {#if pageUser.links}
+    <div>Links:</div>
+    <ul class="links">
+      {#each pageUser.links as link}
+        <li><a href={link.url} target="_new">{link.name}</a></li>
+      {/each}
+    </ul>
+    {/if}
+  </div>
   {#if pageUser.created}
   <p>Joined {timeSince(pageUser.created)} ago</p>
   {/if}
