@@ -1,7 +1,6 @@
 <script>
 import { navigate } from 'svelte-routing'
 import { userStore } from './store'
-import { onMount } from 'svelte'
 
 let user
 $: fetchMe();
@@ -50,8 +49,6 @@ const updateBT = async (event) => {
   })
 
   if (!res.ok) alert('Something went wrong!')
-
-  return location.reload();
 }
 
 const updateLinks = async (event) => {
