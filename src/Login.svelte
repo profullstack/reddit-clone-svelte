@@ -32,10 +32,11 @@
     })
 
     if (!res.ok) alert('Invalid credentials')
-    const { token } = await res.json()
+    const { token, user } = await res.json()
 
     try {
-      userStore.update(() => decode(token).user)
+      console.log(user, token);
+      userStore.set(user)
       localStorage.setItem('token', token)
     } catch (error) {
       console.log(error)

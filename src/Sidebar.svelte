@@ -107,7 +107,7 @@
       <li>
         <Link to="/a/{ category.name }"><span>{ category.name }</span></Link>
         {#if user}
-          {#if user.subscriptions.includes(category._id)}
+          {#if user.subscriptions && user.subscriptions.includes(category._id)}
             <a class="join-leave" href="javascript:void(0)" on:click={() => removeSubscription(category._id)}>Leave</a>
           {:else}
             <a class="join-leave" href="javascript:void(0)" on:click={() => addSubscription(category._id)}>Join</a>
