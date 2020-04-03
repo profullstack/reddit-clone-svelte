@@ -1,11 +1,17 @@
 <script>
   import { onMount } from 'svelte'
   import { Link } from 'svelte-routing'
-  import { categories } from './store'
+  import { categories, userStore } from './store'
+  import { addSubscription, removeSubscription } from './editSubscriptions';
 
   let cats = []
   let filtered = [];
   let search = '';
+
+  let user
+  userStore.subscribe(value => {
+    user = value
+  })
 
   function sort(type) {
     filtered = filtered.sort((a, b) => {
@@ -72,6 +78,10 @@
   .sidebar input {
     background-color: #fff;
   }
+
+  .join-leave {
+    float: right;
+  }
   
   @media only screen and (max-width: 850px) {
     .sidebar {
@@ -84,6 +94,9 @@
   <header>
     <h3>Categories</h3>
     <input type="text" bind:value={search} on:keyup={filterCategories} />
+    {#if user}
+    <Link to="/home"><button>My Categories</button></Link>
+    {/if}
     <nav>
       Sort: <a href="javascript:void(0)" on:click|preventDefault={() => sort('new')}>New</a>
       <a href="javascript:void(0)" on:click|preventDefault={() => sort('original')}>Original</a>
@@ -93,6 +106,13 @@
     {#each filtered as category}
       <li>
         <Link to="/a/{ category.name }"><span>{ category.name }</span></Link>
+        {#if user}
+          {#if user.subscriptions.includes(category._id)}
+            <a class="join-leave" href="javascript:void(0)" on:click={() => removeSubscription(category._id)}>Leave</a>
+          {:else}
+            <a class="join-leave" href="javascript:void(0)" on:click={() => addSubscription(category._id)}>Join</a>
+          {/if}
+        {/if}
       </li>
     {/each}
   </ul>

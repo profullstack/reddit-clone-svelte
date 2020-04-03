@@ -110,6 +110,7 @@
 				<Route path="/inbox" component={ Inbox } />
 				<Route path="/leaderboard" component={ Leaderboard } />
 				<Route path="/settings" component={ Settings } />
+				<Route path="/home" subscriptions={true} component={ Home } />
 				<footer>
 					<a href="/leaderboard">Leaderboard</a>
 					<a id="bookmarklet" href="#" title="Drag to bookmark bar">Bookmarklet</a>

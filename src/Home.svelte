@@ -6,11 +6,13 @@
   import {ROUTER} from 'svelte-routing/src/contexts';
   import { abbreviateNumber } from './utils/abbreviateNumber';
   import { timeSince } from './utils/time';
+  import { addSubscription, removeSubscription } from './editSubscriptions';
 
   const { activeRoute } = getContext(ROUTER);
 
   export let username = null
   export let category = null
+  export let subscriptions = null
   let posts = []
   let sort
   let type
@@ -52,12 +54,18 @@
     sorter()
 
     let url = 'API_BASE_URL'
+    let headers
 
     if (username) url += `/user/${username}?sort=${sort}&page=${page}`
     else if (category) url += `/posts/${category}?sort=${sort}&page=${page}`
+    else if (subscriptions) {
+      const token = localStorage.getItem('token')
+      headers = { Authorization: `Bearer ${token}` }
+      url += `/subscriptions?sort=${sort}&page=${page}`
+    }
     else url += `/posts?sort=${sort}&page=${page}`
 
-    let res = await fetch(url)
+    let res = await fetch(url, { headers })
       .catch(console.error);
     if (!res.ok) return alert('Something wrong!')
     res = await res.json()
@@ -140,10 +148,22 @@ const sorter = () => {
   .topnav {
     margin: 1rem 0;
   }
+  .category {
+    margin-bottom: 0.8rem;
+  }
 </style>
 
 {#if category}
-  <h4><a href={`/a/${category}`}>a/{category}</a></h4>
+  <h4 class="category">
+    <a href={`/a/${category}`}>a/{category}</a>
+  </h4>
+  {#if user}
+    {#if user.subscriptions.includes(categoryData._id)}
+      <button href="javascript:void(0)" on:click={() => removeSubscription(categoryData._id)}>Leave</button>
+    {:else}
+      <button href="javascript:void(0)" on:click={() => addSubscription(categoryData._id)}>Join</button>
+    {/if}
+  {/if}
   <div>{ categoryData.description }</div>
   {#if categoryData.owner}
     <div>Created by <a href={`/u/${categoryData.owner.username}`}>{ categoryData.owner.username }</a> {timeSince(categoryData.created)} ago.</div>
@@ -176,7 +196,11 @@ const sorter = () => {
   <Link to="{$activeRoute.uri}?sort=top" on:click={ () => page = 0 }>Top</Link>
   <Link to="{$activeRoute.uri}?sort=comments" on:click={ () => page = 0 }>Comments</Link>
   <Link to="{$activeRoute.uri}?sort=not" on:click={ () => page = 0 }>Controversial</Link>
-  <a href={`/api/1/${(username ? 'user' : 'posts' )}/${category || username ? (category || username)+'/' : ''}rss?sort=${sort}`}>RSS</a>
+  {#if subscriptions}
+    <a href={`/api/1/posts/rss/${user.id}`}>RSS</a>
+  {:else}
+    <a href={`/api/1/${(username ? 'user' : 'posts' )}/${category || username ? (category || username)+'/' : ''}rss?sort=${sort}`}>RSS</a>
+  {/if}
 </nav>
 {#each posts as post}
   <Post { post }></Post>
