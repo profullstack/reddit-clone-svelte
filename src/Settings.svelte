@@ -20,6 +20,16 @@ const newLink = (event) => {
   }
 }
 
+const deleteLink = (e, i) => {
+  e.preventDefault();
+   if (user.links.length > 0 && user.links.length < 3) {
+    if (i > -1) {
+      user.links.splice(i, 1);
+      user.links = user.links;
+    }
+  }
+}
+
 const updateBT = async (event) => {
   event.preventDefault()
   const form = document.getElementById('settings')
@@ -57,7 +67,7 @@ const updateLinks = async (event) => {
       links.push({name: formData.get(`link-name${i}`), url: formData.get(`link-url${i}`)})
     }
   }
-
+  console.log(numLinks, user.links.length)
   const url = 'API_BASE_URL/me/links'
   const res = await fetch(url, {
     method: 'POST',
@@ -119,6 +129,7 @@ const updateLinks = async (event) => {
       <legend>Social Links</legend>
       {#each user.links as link} 
         <span>Link {user.links.indexOf(link) + 1}</span>
+        {#if isEditingFieldLinks} <a href="#" class="float-right" on:click={(e) => deleteLink(e, user.links.indexOf(link))}>Delete</a> {/if}
         <input type="text" placeholder="Name" name={`link-name${user.links.indexOf(link)}`} value={link.name} disabled={!isEditingFieldLinks}>
         <input type="text" placeholder="Url" name={`link-url${user.links.indexOf(link)}`} value={link.url} disabled={!isEditingFieldLinks}>
       {/each}
