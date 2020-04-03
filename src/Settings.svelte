@@ -120,10 +120,6 @@ const updateLinks = async (event) => {
       <legend>Social Links</legend>
       {#each user.links as link} 
         <span>Link {user.links.indexOf(link) + 1}</span>
-        {#if isEditingFieldLinks} <a href="#" class="float-right" on:click={(e) => deleteLink(e, user.links.indexOf(link))}>Delete</a> {/if}
-        {#if isEditingFieldLinks} <a href="#" class="float-right" on:click={(e) => deleteLink(e, user.links.indexOf(link))}>Delete</a> {/if}
-        <input type="text" placeholder="Name" name={`link-name${user.links.indexOf(link)}`} value={link.name} disabled={!isEditingFieldLinks}>
-        <input type="text" placeholder="Url" name={`link-url${user.links.indexOf(link)}`} value={link.url} disabled={!isEditingFieldLinks}>
         <a href="#" class="float-right" on:click={(e) => deleteLink(e, user.links.indexOf(link))}>Delete</a>
         <input type="text" placeholder="Name" name={`link-name${user.links.indexOf(link)}`} value={link.name}>
         <input type="text" placeholder="Url" name={`link-url${user.links.indexOf(link)}`} value={link.url}>
