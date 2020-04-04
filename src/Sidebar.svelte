@@ -8,7 +8,8 @@
   let filtered = [];
   let search = '';
 
-  let user
+  let user;
+  
   userStore.subscribe(value => {
     user = value
   })
@@ -41,6 +42,25 @@
     categories.set(cats)
     filtered = cats;
   })
+
+  const fetchMe = async () => {
+    if (!user) return;
+    let url = 'API_BASE_URL/me';
+    const token = localStorage.getItem('token');
+
+    const res = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .catch(console.error);
+
+    if (!res.ok) return alert('Failed to fetch user info!')
+    user = await res.json();
+    userStore.set(user);
+  }
+  
+  $: fetchMe();
 </script>
 
 <style>
