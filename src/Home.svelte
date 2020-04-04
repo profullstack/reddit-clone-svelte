@@ -146,7 +146,10 @@ const sorter = () => {
     text-align: center;
   }
   .topnav {
-    margin: 1rem 0;
+    margin: 1rem;
+  }
+  .topnav a {
+    margin-right: .5rem;
   }
   .category {
     margin-bottom: 0.8rem;

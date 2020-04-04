@@ -4,6 +4,7 @@
     <a href="javascript:void" on:click|preventDefault={() => sort('top')}>Top</a>
     <a href="javascript:void" on:click|preventDefault={() => sort('recent')}>Recent</a>
 </nav>
+
 <ol>
 {#each leaders as user}
     <li>
@@ -60,3 +61,12 @@ onMount(async () => {
     }
 })
 </script>
+<style>
+nav {
+    margin: 1rem;
+}
+
+nav a {
+    margin-right: .5rem;
+}
+</style>
