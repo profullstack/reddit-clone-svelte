@@ -158,7 +158,7 @@ const sorter = () => {
     <a href={`/a/${category}`}>a/{category}</a>
   </h4>
   {#if user}
-    {#if user.subscriptions.includes(categoryData._id)}
+    {#if user.subscriptions && user.subscriptions.includes(categoryData._id)}
       <button href="javascript:void(0)" on:click={() => removeSubscription(categoryData._id)}>Leave</button>
     {:else}
       <button href="javascript:void(0)" on:click={() => addSubscription(categoryData._id)}>Join</button>

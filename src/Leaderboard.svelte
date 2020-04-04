@@ -1,5 +1,9 @@
 <h1>Leaderboard</h1>
 
+<nav>
+    <a href="javascript:void" on:click|preventDefault={() => sort('top')}>Top</a>
+    <a href="javascript:void" on:click|preventDefault={() => sort('recent')}>Recent</a>
+</nav>
 <ol>
 {#each leaders as user}
     <li>
@@ -33,6 +37,19 @@ function getLeaderBoard(){
         })
         .catch(console.error);
 }
+
+function sort(type = 'top') {
+    if (type === 'top') {
+        leaders = leaders.sort((a, b) => {
+            return b.karma - a.karma;
+        })
+    } else if (type === 'recent') {
+        leaders = leaders.sort((a, b) => {
+            return new Date(a.created).getTime() - new Date(b.created).getTime();
+        })
+    }
+}
+
 
 onMount(async () => {
     const res = await getLeaderBoard()
