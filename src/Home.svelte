@@ -154,11 +154,15 @@ const sorter = () => {
   .category {
     margin-bottom: 0.8rem;
   }
+  .subscriber-count {
+    font-size: 1.8rem;
+  }
 </style>
 
 {#if category}
   <h4 class="category">
-    <a href={`/a/${category}`}>a/{category}</a>
+    <a href={`/a/${category}`}>a/{category}</a> · 
+    <span class="subscriber-count">{ categoryData.subscriberCount || 0 } { categoryData.subscriberCount == 1 ? 'Subscriber' : 'Subscribers'}</span>
   </h4>
   {#if user}
     {#if user.subscriptions && user.subscriptions.includes(categoryData._id)}
