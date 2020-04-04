@@ -3,6 +3,7 @@
   import { Link } from 'svelte-routing'
   import { categories, userStore } from './store'
   import { addSubscription, removeSubscription } from './editSubscriptions';
+  import { abbreviateNumber } from './utils/abbreviateNumber';
 
   let cats = []
   let filtered = [];
@@ -72,7 +73,7 @@
     width: 200px;
     padding: 0 1rem 1rem;
     height: calc(100vh - 6.8rem);
-    width: 25rem;
+    width: 25.2rem;
     flex-shrink: 0;
     overflow-y: auto;
     position: sticky;
@@ -125,6 +126,7 @@
   <ul>
     {#each filtered as category}
       <li>
+        <span>{ abbreviateNumber(category.subscriberCount || 0 )}</span>
         <Link to="/a/{ category.name }"><span>{ category.name }</span></Link>
         {#if user}
           {#if user.subscriptions && user.subscriptions.includes(category._id)}
