@@ -2,7 +2,7 @@
 
 <nav>
     <a href="javascript:void" on:click|preventDefault={() => sort('top')}>Top</a>
-    <a href="javascript:void" on:click|preventDefault={() => sort('recent')}>Recent</a>
+    <a href="javascript:void" on:click|preventDefault={() => sort('new')}>New</a>
 </nav>
 
 <ol>
@@ -44,9 +44,22 @@ function sort(type = 'top') {
         leaders = leaders.sort((a, b) => {
             return b.karma - a.karma;
         })
-    } else if (type === 'recent') {
+    } else if (type === 'new') {
         leaders = leaders.sort((a, b) => {
-            return new Date(a.created).getTime() - new Date(b.created).getTime();
+            let aDate = new Date(a.created).getTime();
+            let bDate = new Date(b.created).getTime();
+
+            if (!aDate) {
+                aDate = 0;
+            }
+
+            if (!bDate) {
+                bDate = 0;
+            }
+
+            console.log(aDate, bDate);
+
+            return bDate - aDate;
         })
     }
 }
