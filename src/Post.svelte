@@ -29,7 +29,8 @@
         youtubeId = post.url.match(/youtu.be\/([^&\?]*)/);
         postVideo = post.url;
       } else if (post.url.indexOf('nullvideo') > -1) {
-        postVideo = post.url.replace('/user/', '/uploads/').replace(/(\?.*)/, '.mp4$1');
+        postVideo = post.url.replace('/user/', '/uploads/') + '.mp4';
+        postVideo = postVideo.replace(/(\?.*)/, '.mp4$1');
         nullvideo = postVideo;
       } else if (/\.(mp4|mov|m3u8)/.test(post.url.toLowerCase())) {
         postVideo = post.url;
@@ -144,7 +145,7 @@
 
   .thumb {
     display: block;
-    max-width: 50%;
+    max-width: 100%;
     max-height: 50rem;
   }
 

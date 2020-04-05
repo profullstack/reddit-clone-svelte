@@ -19,6 +19,8 @@
     filtered = filtered.sort((a, b) => {
       if (type === 'new') {
         return new Date(b.created).getTime() - new Date(a.created).getTime();
+      } else if (type === 'top') {
+        return b.subscriberCount - a.subscriberCount;
       }
 
       return new Date(a.created).getTime() - new Date(b.created).getTime();
@@ -121,6 +123,7 @@
     <nav>
       Sort: <a href="javascript:void(0)" on:click|preventDefault={() => sort('new')}>New</a>
       <a href="javascript:void(0)" on:click|preventDefault={() => sort('original')}>Original</a>
+      <a href="javascript:void(0)" on:click|preventDefault={() => sort('top')}>Top</a>
     </nav>
   </header>
   <ul>
