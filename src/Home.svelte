@@ -15,7 +15,7 @@
   export let subscriptions = null
   let posts = []
   let sort
-  let type
+  let type = 'hot'
   let categoryData = {}
   let page = 0
   let morePosts
@@ -119,7 +119,7 @@
 
 const sorter = () => {
     const urlParams = new URLSearchParams(window.location.search)
-    type = urlParams.get('sort')
+    if (urlParams.get('sort')) type = urlParams.get('sort')
     
     if (type === 'hot') {
       sort = '-rank'
@@ -133,6 +133,7 @@ const sorter = () => {
       sort = '+score';
     }
 
+    sort = encodeURIComponent(sort)
     return true;
   }
 
