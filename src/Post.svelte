@@ -145,8 +145,11 @@
 
   .thumb {
     display: block;
-    max-width: 100%;
-    max-height: 50rem;
+    width: 25rem;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 25rem;
   }
 
   .youtube {
@@ -171,10 +174,18 @@
       height: auto;
   }
 
-  .withDetails .thumb {
-    max-width: 100%;
-    max-height: 100rem;
+
+@media all and (orientation: landscape) {
+  .thumb {
+    width: 50rem;
+    height: 50rem;
   }
+  .withDetails .thumb {
+    width: 75rem;
+    height: 75rem;
+  }
+
+}
 </style>
 
 <div class="content">
@@ -199,14 +210,10 @@
     {#if postThumb}
       {#if withDetails}
         {#if !postVideo}
-        <a href="{ post.url }" target="_blank">
-          <img class="thumb" src={postThumb} alt={post.title} />
-        </a>  
+        <a href="{ post.url }" class="thumb" target="_blank" style="background-image: url('{postThumb}');" title={post.title}></a>  
         {/if}
       {:else}
-        <a href={`/a/${post.category.name}/${post.id}`}>
-          <img class="thumb" src={postThumb} alt={post.title} />
-        </a>
+        <a href={`/a/${post.category.name}/${post.id}`} class="thumb" style="background-image: url('{postThumb}');" title={post.title}></a>  
       {/if}
     {/if}
     {#if postVideo}
