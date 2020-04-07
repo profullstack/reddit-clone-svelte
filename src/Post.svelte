@@ -149,7 +149,7 @@
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 25rem;
+    height: auto;
   }
 
   .youtube {
@@ -178,11 +178,9 @@
 @media all and (orientation: landscape) {
   .thumb {
     width: 50rem;
-    height: 50rem;
   }
   .withDetails .thumb {
     width: 75rem;
-    height: 75rem;
   }
 
 }
@@ -210,10 +208,14 @@
     {#if postThumb}
       {#if withDetails}
         {#if !postVideo}
-        <a href="{ post.url }" class="thumb" target="_blank" style="background-image: url('{postThumb}');" title={post.title}></a>  
+        <a href="{ post.url }" target="_blank">
+          <img src={postThumb} alt={post.title} class="thumb" />
+        </a>  
         {/if}
       {:else}
-        <a href={`/a/${post.category.name}/${post.id}`} class="thumb" style="background-image: url('{postThumb}');" title={post.title}></a>  
+        <a href={`/a/${post.category.name}/${post.id}`}>
+          <img src={postThumb} alt={post.title} class="thumb" />      
+        </a>  
       {/if}
     {/if}
     {#if postVideo}
