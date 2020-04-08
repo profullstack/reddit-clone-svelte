@@ -7,8 +7,8 @@
   export let category = null
   export let postId = null
   let post = null
-
   let user
+
   userStore.subscribe(value => {
     user = value
   })
@@ -69,3 +69,5 @@
   <Comment id={ post.id } comments={ post.comments } on:update-comment={ updateComment }></Comment>
 </div>
 {/if}
+
+

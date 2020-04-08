@@ -186,6 +186,8 @@
 }
 </style>
 
+
+
 <div class="content">
   <div class="voting-container">
     <span class="upvote-button"><span on:click={ upvote }>❮</span></span>
