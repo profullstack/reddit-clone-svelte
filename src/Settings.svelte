@@ -61,7 +61,7 @@ const updateLinks = async (event) => {
   form.reset()
   let links = []
 
-  for (i=0; i < Math.max(numLinks, user.links.length); i++) {
+  for (let i = 0; i < Math.max(numLinks, user.links.length); i++) {
     if (formData.get(`link-name${i}`) != "" && formData.get(`link-url${i}`) != "" && formData.get(`link-name${i}`) != null && formData.get(`link-url${i}`) != null) {
       links.push({name: formData.get(`link-name${i}`), url: formData.get(`link-url${i}`)})
     }
