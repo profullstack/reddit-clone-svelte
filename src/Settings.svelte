@@ -4,7 +4,6 @@ import { userStore } from './store'
 import { onMount } from 'svelte'
 
 let user
-$: fetchMe();
 let isEditingFieldBT = false;
 let isEditingFieldLinks = false;
 let numLinks = 1;
@@ -96,6 +95,8 @@ const updateLinks = async (event) => {
     user = await res.json();
     userStore.set(user);
   }
+
+  onMount(fetchMe)
 
 </script>
 
