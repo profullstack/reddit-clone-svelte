@@ -19,6 +19,8 @@
   let categoryData = {}
   let page = 0
   let morePosts
+  let isLoadingPosts = false
+  let postRequestId = 0
 
   let currentCat
   currentCategory.subscribe(value => {
@@ -51,6 +53,8 @@
   }
 
   const fetchPost = async ({ type, username, category }) => {
+    const requestId = ++postRequestId
+    isLoadingPosts = true
     sorter()
 
     let url = 'API_BASE_URL'
@@ -65,16 +69,23 @@
     }
     else url += `/posts?sort=${sort}&page=${page}`
 
-    let res = await fetch(url, { headers })
-      .catch(console.error);
-    if (!res.ok) return alert('Something wrong!')
-    res = await res.json()
-    morePosts = res.more
-    if (page > 0) {
-      posts = posts.concat(res.posts)
-    }
-    else {
-      posts = res.posts
+    try {
+      let res = await fetch(url, { headers })
+        .catch(console.error);
+      if (!res || !res.ok) return alert('Something wrong!')
+      res = await res.json()
+      if (requestId !== postRequestId) return
+      morePosts = res.more
+      if (page > 0) {
+        posts = posts.concat(res.posts)
+      }
+      else {
+        posts = res.posts
+      }
+    } finally {
+      if (requestId === postRequestId) {
+        isLoadingPosts = false
+      }
     }
   }
 
@@ -158,6 +169,28 @@ const sorter = () => {
   .subscriber-count {
     font-size: 1.8rem;
   }
+  .post-spinner {
+    align-items: center;
+    color: #147b50;
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+  }
+  .post-spinner:before {
+    animation: spin 0.8s linear infinite;
+    border: 0.3rem solid #d7fded;
+    border-top-color: #147b50;
+    border-radius: 50%;
+    content: "";
+    height: 2rem;
+    margin-right: 1rem;
+    width: 2rem;
+  }
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
 </style>
 
 {#if category}
@@ -210,12 +243,15 @@ const sorter = () => {
     <a href={`/api/1/${(username ? 'user' : 'posts' )}/${category || username ? (category || username)+'/' : ''}rss?sort=${sort}`}>RSS</a>
   {/if}
 </nav>
+{#if isLoadingPosts}
+  <div class="post-spinner" role="status" aria-live="polite">Loading posts...</div>
+{/if}
 {#each posts as post}
   <Post { post }></Post>
 {/each}
 
 {#if posts.length > 0 && morePosts}
   <div class="load-more">
-    <button on:click={ () => page += 1 }>Load More</button>
+    <button disabled={isLoadingPosts} on:click={ () => page += 1 }>Load More</button>
   </div>
 {/if}
