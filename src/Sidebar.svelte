@@ -44,6 +44,7 @@
     cats = await res.json()
     categories.set(cats)
     filtered = cats;
+    fetchMe();
   })
 
   const fetchMe = async () => {
@@ -63,7 +64,6 @@
     userStore.set(user);
   }
   
-  $: fetchMe();
 </script>
 
 <style>
