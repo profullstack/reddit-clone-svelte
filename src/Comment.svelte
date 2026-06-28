@@ -14,7 +14,7 @@
 
   const removeComment = async (event) => {
     event.preventDefault()
-    const { srcElement: { id: commentId } } = event
+    const { id: commentId } = event.currentTarget
 
     const url = `API_BASE_URL/post/${id}/${commentId}`
     const token = localStorage.getItem('token')
