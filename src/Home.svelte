@@ -117,6 +117,8 @@
     userStore.set(user);
   }
 
+  onMount(fetchMe)
+
 const sorter = () => {
     const urlParams = new URLSearchParams(window.location.search)
     if (urlParams.get('sort')) type = urlParams.get('sort')
@@ -140,7 +142,6 @@ const sorter = () => {
   $: fetchPost({ type, username, category, page, $activeRoute })
   $: fetchCategory(category)
   $: fetchUser(username);
-  $: fetchMe();
 </script>
 <style>
   .load-more {
