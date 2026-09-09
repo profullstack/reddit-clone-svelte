@@ -7,7 +7,7 @@ This project is a front-end only reddit clone that I wrote to learn abaout Svelt
 1. Node
 2. Reddit Clone API
 
-    You can have your own API as long as it follows the [Blueprint]() in this repository. Or If you in a hurry, you can pick one from this list:
+    You can have your own API as long as it follows the [Blueprint](API_BLUEPRINT.md) in this repository. Or If you in a hurry, you can pick one from this list:
 
     | Language      | Name          | Source         | Status | Mantainer |
     | ------------- | ------------- | :------------- | :----- | :--- |
