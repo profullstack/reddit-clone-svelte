@@ -199,7 +199,7 @@
   }
 </style>
 
-<form id="create-post">
+<form id="create-post" on:submit|preventDefault={ createPost }>
   <fieldset>
     <div class="category-toggle">
       <input id="toggle-on" class="toggle toggle-left" name="type" type="radio" checked bind:group={scoops} value={ 'link' }>
@@ -232,7 +232,7 @@
       <textarea placeholder="Put your text here ..." id="text" name="text" value="{text}"></textarea>
     {/if}
     <footer>
-      <button class="button-primary float-right" type="submit" on:click={ createPost }>Create Post</button>
+      <button class="button-primary float-right" type="submit">Create Post</button>
     </footer>
   </fieldset>
 </form>
